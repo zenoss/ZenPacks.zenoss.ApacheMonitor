@@ -97,7 +97,8 @@ class ApacheMonitorDataSource(ZenPackPersistence,
     def checkCommandPrefix(self, context, cmd):
         if self.usessh:
             return os.path.join(context.zCommandPath, cmd)
-        return os.path.join('$ZENHOME/Products/ApacheMonitor/libexec', cmd)
+        zp = self.getZenPack(context)
+        return zp.path('libexec', cmd)
 
 
     def addDataPoints(self):
