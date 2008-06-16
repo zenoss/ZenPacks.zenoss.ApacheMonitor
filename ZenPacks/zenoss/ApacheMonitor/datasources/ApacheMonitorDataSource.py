@@ -36,14 +36,14 @@ class ApacheMonitorDataSource(ZenPackPersistence,
     eventClass = '/Status/Web'
 
     hostname = '${dev/manageIp}'
-    port = 80
+    port = '80'
     url = '/server-status?auto'
 
     _properties = BasicDataSource.BasicDataSource._properties + (
             {'id':'timeout', 'type':'int', 'mode':'w'},
             {'id':'eventClass', 'type':'string', 'mode':'w'},
             {'id':'hostname', 'type':'string', 'mode':'w'},
-            {'id':'port', 'type':'int', 'mode':'w'},
+            {'id':'port', 'type':'string', 'mode':'w'},
             {'id':'url', 'type':'string', 'mode':'w'},
             )
 

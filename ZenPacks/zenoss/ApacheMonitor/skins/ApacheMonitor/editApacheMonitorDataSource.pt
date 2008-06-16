@@ -125,7 +125,7 @@
         <tr>
             <td class="tableheader">Apache Port</td>
             <td class="tablevalues" tal:condition="editable">
-            <input class="tablevalues" type="text" name="port:int" size="40"
+            <input class="tablevalues" type="text" name="port:string" size="40"
                 tal:attributes="value here/port" />
             </td>
           <td class="tablevalues" tal:condition="not:editable" 
