@@ -36,14 +36,16 @@ class ApacheMonitorDataSource(ZenPackPersistence,
     eventClass = '/Status/Web'
 
     hostname = '${dev/manageIp}'
-    port = '80'
+    port = 80
+    ssl = False
     url = '/server-status?auto'
 
     _properties = BasicDataSource.BasicDataSource._properties + (
             {'id':'timeout', 'type':'int', 'mode':'w'},
             {'id':'eventClass', 'type':'string', 'mode':'w'},
             {'id':'hostname', 'type':'string', 'mode':'w'},
-            {'id':'port', 'type':'string', 'mode':'w'},
+            {'id':'port', 'type':'int', 'mode':'w'},
+            {'id':'ssl', 'type':'boolean', 'mode':'w'},            
             {'id':'url', 'type':'string', 'mode':'w'},
             )
 
@@ -88,6 +90,8 @@ class ApacheMonitorDataSource(ZenPackPersistence,
             parts.append('-H %s' % self.hostname)
         if self.port:
             parts.append('-p %s' % self.port)
+        if self.ssl:
+            parts.append('-s')
         if self.url:
             parts.append("-u '%s'" % self.url)
         cmd = ' '.join(parts)
@@ -102,9 +106,14 @@ class ApacheMonitorDataSource(ZenPackPersistence,
 
 
     def addDataPoints(self):
-        for dpname in ('bytesPerReq', 'bytesPerSec', 'cpuLoad', 'reqPerSec',
-                'slotDNSLookup', 'slotKeepAlive', 'slotLogging', 'slotOpen',
-                'slotReadingRequest', 'slotSendingReply', 'slotWaiting'):
+        for dpname in ('totalAccesses', 'totalKBytes'):
+            dp = self.manage_addRRDDataPoint(dpname)
+            dp.rrdtype = 'DERIVE'
+            dp.rrdmin = 0
+        
+        for dpname in ('bytesPerReq', 'cpuLoad', 'slotDNSLookup',
+            'slotKeepAlive', 'slotLogging', 'slotOpen', 'slotReadingRequest',
+            'slotSendingReply', 'slotWaiting'):
 
             dp = self.manage_addRRDDataPoint(dpname)
             dp.rrdtype = 'GAUGE'

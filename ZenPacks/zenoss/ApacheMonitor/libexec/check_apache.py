@@ -18,16 +18,21 @@ import httplib
 import re
 
 class ZenossApacheStatsPlugin:
-    def __init__(self, host, port, url):
+    def __init__(self, host, port, ssl, url):
         self.host = host
         self.port = port
+        self.ssl = ssl
         self.url = url
 
     def run(self):
         line_regex = re.compile(r'^([^:]+): (.+)$')
         metrics = {}
 
-        conn = httplib.HTTPConnection(self.host, self.port)
+        if self.ssl:
+            conn = httplib.HTTPSConnection(self.host, self.port)
+        else:
+            conn = httplib.HTTPConnection(self.host, self.port)
+        
         try:
             conn.request('GET', self.url)
             response = conn.getresponse()
@@ -35,7 +40,7 @@ class ZenossApacheStatsPlugin:
                 print 'Server replied: %d %s to action GET %s' % (
                         response.status, response.reason, self.url)
                 sys.exit(1)
-
+            
             data = response.read()
             for line in data.split("\n"):
                 match = line_regex.search(line)
@@ -91,9 +96,13 @@ class ZenossApacheStatsPlugin:
         except SystemExit:
             sys.exit(1)
         except Exception, e:
-            print "Error: %s" % (e,)
+            print str(e)
             sys.exit(1)
 
+        if not metrics:
+            print "no metrics were returned"
+            sys.exit(1)
+        
         print "STATUS OK|%s" % (' '.join([ "%s=%s" % (m[0],m[1]) \
             for m in metrics.items() ]))
 
@@ -102,8 +111,11 @@ if __name__ == "__main__":
     parser.add_option('-H', '--host', dest='host',
         help='Hostname of Apache server')
     parser.add_option('-p', '--port', dest='port',
-        default=80,
+        type='int', default=80,
         help='Port of Apache server')
+    parser.add_option('-s', '--ssl', dest='ssl',
+        action='store_true', default=False,
+        help='Use HTTPS for the connection')
     parser.add_option('-u', '--url', dest='url',
         default='/server-status?auto',
         help='Relative URL of server status page')
@@ -113,5 +125,6 @@ if __name__ == "__main__":
         print "You must specify the host parameter."
         sys.exit(1)
 
-    cmd = ZenossApacheStatsPlugin(options.host, options.port, options.url)
+    cmd = ZenossApacheStatsPlugin(
+        options.host, options.port, options.ssl, options.url)
     cmd.run()

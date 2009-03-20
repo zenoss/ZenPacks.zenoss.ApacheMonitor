@@ -19,7 +19,7 @@ from ZenPacks.zenoss.ApacheMonitor.datasources.ApacheMonitorDataSource \
 
 
 class ConvertApacheMonitorDataSources(ZenPackDataSourceMigrateBase):
-    version = Version(2, 0, 0)
+    version = Version(2, 0, 2)
     
     # These provide for conversion of datasource instances to the new class
     dsClass = ApacheMonitorDataSource

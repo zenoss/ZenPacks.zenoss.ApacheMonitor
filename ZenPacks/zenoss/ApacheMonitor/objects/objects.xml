@@ -47,6 +47,28 @@ ${dev/manageIp}
 /server-status?auto
 </property>
 <tomanycont id='datapoints'>
+<object id='totalAccesses' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+<property type="string" id="rrdmin" mode="w" >
+0
+</property>
+</object>
+<object id='totalKBytes' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
+DERIVE
+</property>
+<property type="boolean" id="isrow" mode="w" >
+True
+</property>
+<property type="string" id="rrdmin" mode="w" >
+0
+</property>
+</object>
 <object id='bytesPerReq' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
 GAUGE
@@ -55,23 +77,7 @@ GAUGE
 True
 </property>
 </object>
-<object id='bytesPerSec' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
-<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
-GAUGE
-</property>
-<property type="boolean" id="isrow" mode="w" >
-True
-</property>
-</object>
 <object id='cpuLoad' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
-<property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
-GAUGE
-</property>
-<property type="boolean" id="isrow" mode="w" >
-True
-</property>
-</object>
-<object id='reqPerSec' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
 GAUGE
 </property>
@@ -252,7 +258,7 @@ False
 True
 </property>
 <tomanycont id='graphPoints'>
-<object id='reqPerSec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
+<object id='totalAccesses' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
 </property>
@@ -272,7 +278,7 @@ Requests
 -1
 </property>
 <property type="string" id="dpName" mode="w" >
-apache_reqPerSec
+apache_totalAccesses
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
@@ -519,7 +525,7 @@ AVERAGE
 500
 </property>
 <property type="string" id="units" mode="w" >
-bytes
+bytes/sec
 </property>
 <property type="boolean" id="log" mode="w" >
 False
@@ -540,10 +546,7 @@ True
 1
 </property>
 <tomanycont id='graphPoints'>
-<object id='bytesPerReq' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
-<property type="long" id="sequence" mode="w" >
-1
-</property>
+<object id='totalKBytes' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
 <property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
 LINE
 </property>
@@ -557,39 +560,16 @@ False
 %5.2lf%s
 </property>
 <property type="string" id="legend" mode="w" >
-Bytes/request
+Bytes
 </property>
 <property type="long" id="limit" mode="w" >
 -1
 </property>
-<property type="string" id="dpName" mode="w" >
-apache_bytesPerReq
-</property>
-<property type="string" id="cFunc" mode="w" >
-AVERAGE
-</property>
-</object>
-<object id='bytesPerSec' module='Products.ZenModel.DataPointGraphPoint' class='DataPointGraphPoint'>
-<property select_variable="lineTypes" type="selection" id="lineType" mode="w" >
-LINE
-</property>
-<property type="long" id="lineWidth" mode="w" >
-2
-</property>
-<property type="boolean" id="stacked" mode="w" >
-False
-</property>
-<property type="string" id="format" mode="w" >
-%5.2lf%s
-</property>
-<property type="string" id="legend" mode="w" >
-Bytes/second
-</property>
-<property type="long" id="limit" mode="w" >
--1
+<property type="string" id="rpn" mode="w" >
+1024,*
 </property>
 <property type="string" id="dpName" mode="w" >
-apache_bytesPerSec
+apache_totalKBytes
 </property>
 <property type="string" id="cFunc" mode="w" >
 AVERAGE
