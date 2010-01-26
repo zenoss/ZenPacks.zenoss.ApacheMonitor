@@ -18,21 +18,22 @@ import httplib
 import re
 
 class ZenossApacheStatsPlugin:
-    def __init__(self, host, port, ssl, url):
+    def __init__(self, host, port, ssl, url, ngregex, ngerror):
         self.host = host
         self.port = port
         self.ssl = ssl
         self.url = url
+        self.ngregex = ngregex
+        self.ngerror = ngerror
 
     def run(self):
-        line_regex = re.compile(r'^([^:]+): (.+)$')
         metrics = {}
 
         if self.ssl:
             conn = httplib.HTTPSConnection(self.host, self.port)
         else:
             conn = httplib.HTTPConnection(self.host, self.port)
-        
+
         try:
             conn.request('GET', self.url)
             response = conn.getresponse()
@@ -40,8 +41,9 @@ class ZenossApacheStatsPlugin:
                 print 'Server replied: %d %s to action GET %s' % (
                         response.status, response.reason, self.url)
                 sys.exit(1)
-            
             data = response.read()
+
+            line_regex = re.compile(r'^([^:]+): (.+)$')
             for line in data.split("\n"):
                 match = line_regex.search(line)
                 if not match: continue
@@ -93,6 +95,27 @@ class ZenossApacheStatsPlugin:
                         elif code == '.':
                             metrics['slotOpen'] += 1
 
+            if self.ngregex:
+                line_regex = re.compile(self.ngregex)
+                msg = ""
+                for line in data.split("\n"):
+                    match = line_regex.search(line)
+                    if not match: continue
+
+                    for k, v in match.groupdict().items():
+                        if v is None:
+                            # We get here in a case like the following:
+                            #     re.match("(1)(?P<group>[^2])?.?(3)", "123")
+                            # This is useful because we can use this fact to
+                            # generate a custom error message if only some of our
+                            # groups match.
+                            msg = self.ngerror
+                        else:
+                            metrics[k] = v
+                if msg:
+                    print msg + "|" + " ".join(["%s=%s" % (k, v) for k,v in metrics.items()])
+                    sys.exit(1)
+
         except SystemExit:
             sys.exit(1)
         except Exception, e:
@@ -102,7 +125,7 @@ class ZenossApacheStatsPlugin:
         if not metrics:
             print "no metrics were returned"
             sys.exit(1)
-        
+
         print "STATUS OK|%s" % (' '.join([ "%s=%s" % (m[0],m[1]) \
             for m in metrics.items() ]))
 
@@ -119,6 +142,12 @@ if __name__ == "__main__":
     parser.add_option('-u', '--url', dest='url',
         default='/server-status?auto',
         help='Relative URL of server status page')
+    parser.add_option('-r', '--regex', dest='ngregex',
+        default='',
+        help='A named group (!) regular expression')
+    parser.add_option('-e', '--error', dest='ngerror',
+        default='',
+        help='Error message to send if one of the named groups return None')
     options, args = parser.parse_args()
 
     if not options.host:
@@ -126,5 +155,5 @@ if __name__ == "__main__":
         sys.exit(1)
 
     cmd = ZenossApacheStatsPlugin(
-        options.host, options.port, options.ssl, options.url)
+        options.host, options.port, options.ssl, options.url, options.ngregex, options.ngerror)
     cmd.run()

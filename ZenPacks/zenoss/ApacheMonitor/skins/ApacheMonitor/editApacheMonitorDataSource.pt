@@ -4,18 +4,18 @@
 
 <form method="POST" enctype="multipart/form-data"
     tal:attributes="action string:${here/absolute_url_path}">
-    <input type="hidden" name="zenScreenName" 
-        tal:attributes="value template/id" /> 
+    <input type="hidden" name="zenScreenName"
+        tal:attributes="value template/id" />
 
 
-        <tal:block tal:define="message request/message | string:State at time:; 
+        <tal:block tal:define="message request/message | string:State at time:;
             tabletitle string:${message} ${here/getNowString};
 			showfilterbox python:False">
         <tal:block metal:use-macro="here/zenuimacros/macros/zentable">
 
         <tal:block metal:fill-slot="zentablecontents">
         <!-- BEGIN TABLE CONTENTS -->
-            
+
     <tr>
         <td class="tableheader">Name</td>
         <td class="tablevalues" tal:condition="editable">
@@ -37,7 +37,7 @@
                     tal:attributes="value e; selected python:e==here.enabled"/>
         </select>
         </td>
-        <td class="tablevalues" tal:condition="not:editable" 
+        <td class="tablevalues" tal:condition="not:editable"
             tal:content="here/enabled"/>
     </tr>
 
@@ -49,7 +49,7 @@
                     tal:attributes="value e; selected python:e==here.usessh"/>
         </select>
         </td>
-        <td class="tablevalues" tal:condition="not:editable" 
+        <td class="tablevalues" tal:condition="not:editable"
             tal:content="here/usessh"/>
     </tr>
 
@@ -59,19 +59,19 @@
             <input class="tablevalues" type="text" name="component" size="40"
                 tal:attributes="value here/component" />
             </td>
-          <td class="tablevalues" tal:condition="not:editable" 
+          <td class="tablevalues" tal:condition="not:editable"
                 tal:content="here/component"/>
         </tr>
         <tr>
             <td class="tableheader">Event Class</td>
             <td class="tablevalues" tal:condition="editable">
             <select class="tablevalues" name="eventClass">
-                <option tal:repeat="evtcls here/getEventClassNames" 
+                <option tal:repeat="evtcls here/getEventClassNames"
                         tal:content="evtcls"
                         tal:attributes="selected python:evtcls==here.eventClass"/>
             </select>
             </td>
-          <td class="tablevalues" tal:condition="not:editable" 
+          <td class="tablevalues" tal:condition="not:editable"
                 tal:content="here/eventClass"/>
         </tr>
         <tr>
@@ -80,7 +80,7 @@
             <input class="tablevalues" type="text" name="eventKey" size="40"
                 tal:attributes="value here/eventKey" />
             </td>
-          <td class="tablevalues" tal:condition="not:editable" 
+          <td class="tablevalues" tal:condition="not:editable"
                 tal:content="here/eventKey"/>
         </tr>
         <tr>
@@ -92,7 +92,7 @@
                        tal:attributes="selected python:sev[1]==here.severity; value python:sev[1]"/>
             </select>
             </td>
-          <td class="tablevalues" tal:condition="not:editable" 
+          <td class="tablevalues" tal:condition="not:editable"
                 tal:content="here/getSeverityString"/>
         </tr>
         <tr>
@@ -101,7 +101,7 @@
             <input class="tablevalues" type="text" name="timeout:int" size="10"
                 tal:attributes="value here/timeout" />
             </td>
-          <td class="tablevalues" tal:condition="not:editable" 
+          <td class="tablevalues" tal:condition="not:editable"
                 tal:content="here/timeout"/>
         </tr>
         <tr>
@@ -110,7 +110,7 @@
             <input class="tablevalues" type="text" name="cycletime:int" size="10"
                 tal:attributes="value here/cycletime" />
             </td>
-          <td class="tablevalues" tal:condition="not:editable" 
+          <td class="tablevalues" tal:condition="not:editable"
                 tal:content="here/cycletime"/>
         </tr>
         <tr>
@@ -119,7 +119,7 @@
             <input class="tablevalues" type="text" name="hostname:string" size="40"
                 tal:attributes="value here/hostname" />
             </td>
-          <td class="tablevalues" tal:condition="not:editable" 
+          <td class="tablevalues" tal:condition="not:editable"
                 tal:content="here/hostname"/>
         </tr>
         <tr>
@@ -128,7 +128,7 @@
             <input class="tablevalues" type="text" name="port:string" size="40"
                 tal:attributes="value here/port" />
             </td>
-          <td class="tablevalues" tal:condition="not:editable" 
+          <td class="tablevalues" tal:condition="not:editable"
                 tal:content="here/port"/>
         </tr>
         <tr>
@@ -139,7 +139,7 @@
                         tal:attributes="value e; selected python:e==here.ssl"/>
             </select>
             </td>
-            <td class="tablevalues" tal:condition="not:editable" 
+            <td class="tablevalues" tal:condition="not:editable"
                 tal:content="here/ssl"/>
         </tr>
         <tr>
@@ -148,8 +148,26 @@
             <input class="tablevalues" type="text" name="url:string" size="40"
                 tal:attributes="value here/url" />
             </td>
-          <td class="tablevalues" tal:condition="not:editable" 
+            <td class="tablevalues" tal:condition="not:editable"
                 tal:content="here/url"/>
+        </tr>
+        <tr>
+            <td class="tableheader">Named Group Regex</td>
+            <td class="tablevalues" tal:condition="editable">
+            <textarea class="tablevalues" name="ngregex:string" cols="38" rows="4"
+                tal:content="here/ngregex"></textarea>
+            </td>
+            <td class="tablevalues" tal:condition="not:editable"
+                tal:content="here/ngregex"/>
+        </tr>
+        <tr>
+            <td class="tableheader">Named Group Regex Error</td>
+            <td class="tablevalues" tal:condition="editable">
+            <input class="tablevalues" type="text" name="ngerror:string" size="40"
+                tal:attributes="value here/ngerror" />
+            </td>
+            <td class="tablevalues" tal:condition="not:editable"
+                tal:content="here/ngerror"/>
         </tr>
     <tr>
         <td class=tableheader align="left" >
@@ -165,7 +183,7 @@
         </tal:block>
         </tal:block>
         </tal:block>
-        
+
 
 </form>
 
@@ -175,7 +193,7 @@
 <form method="post" tal:attributes="action here/absolute_url_path">
 
 
-        <tal:block tal:define="tableName string:rrdtempdplist; 
+        <tal:block tal:define="tableName string:rrdtempdplist;
         objects here/datapoints;
         batch python:here.ZenTableManager.getBatch(tableName,objects);
 		tabletitle string:DataPoints;
@@ -194,8 +212,8 @@
 
         <tal:block metal:fill-slot="zentablecontents">
         <!-- BEGIN TABLE CONTENTS -->
-            
-    
+
+
     <tr>
         <th tal:replace="structure python:here.ZenTableManager.getTableHeader(
                     tableName,'getId','Name')"/>
@@ -204,11 +222,11 @@
     </tr>
     <tr class="tablevalues" tal:repeat="dp batch">
         <td>
-            <input tal:condition="editable" 
-                type="checkbox" name="ids:list" 
+            <input tal:condition="editable"
+                type="checkbox" name="ids:list"
                 tal:attributes="value dp/id"/>
             <a tal:condition="editable"
-                tal:attributes="href dp/getPrimaryUrlPath" 
+                tal:attributes="href dp/getPrimaryUrlPath"
                 tal:content="dp/id">name</a>
             <tal:block tal:condition="not:editable" tal:content="dp/getId"/>
         </td>

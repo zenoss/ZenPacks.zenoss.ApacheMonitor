@@ -26,7 +26,7 @@ import os
 class ApacheMonitorDataSource(ZenPackPersistence,
                                 BasicDataSource.BasicDataSource):
     APACHE_MONITOR = 'ApacheMonitor'
-    
+
     ZENPACKID = 'ZenPacks.zenoss.ApacheMonitor'
 
     sourcetypes = (APACHE_MONITOR,)
@@ -39,14 +39,18 @@ class ApacheMonitorDataSource(ZenPackPersistence,
     port = '80'
     ssl = False
     url = '/server-status?auto'
+    ngregex = ""
+    ngerror = ""
 
     _properties = BasicDataSource.BasicDataSource._properties + (
             {'id':'timeout', 'type':'int', 'mode':'w'},
             {'id':'eventClass', 'type':'string', 'mode':'w'},
             {'id':'hostname', 'type':'string', 'mode':'w'},
             {'id':'port', 'type':'string', 'mode':'w'},
-            {'id':'ssl', 'type':'boolean', 'mode':'w'},            
+            {'id':'ssl', 'type':'boolean', 'mode':'w'},
             {'id':'url', 'type':'string', 'mode':'w'},
+            {'id':'ngregex', 'type':'string', 'mode':'w'},
+            {'id':'ngerror', 'type':'string', 'mode':'w'},
             )
 
     _relations = BasicDataSource.BasicDataSource._relations + (
@@ -94,6 +98,10 @@ class ApacheMonitorDataSource(ZenPackPersistence,
             parts.append('-s')
         if self.url:
             parts.append("-u '%s'" % self.url)
+        if self.ngregex:
+            parts.append("-r '%s'" % self.ngregex)
+            if self.ngerror:
+                parts.append("-e '%s'" % self.ngerror)
         cmd = ' '.join(parts)
         cmd = BasicDataSource.BasicDataSource.getCommand(self, context, cmd)
         return cmd
@@ -110,7 +118,7 @@ class ApacheMonitorDataSource(ZenPackPersistence,
             dp = self.manage_addRRDDataPoint(dpname)
             dp.rrdtype = 'DERIVE'
             dp.rrdmin = 0
-        
+
         for dpname in ('bytesPerReq', 'cpuLoad', 'slotDNSLookup',
             'slotKeepAlive', 'slotLogging', 'slotOpen', 'slotReadingRequest',
             'slotSendingReply', 'slotWaiting'):
