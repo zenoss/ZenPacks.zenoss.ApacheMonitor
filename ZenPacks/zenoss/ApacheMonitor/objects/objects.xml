@@ -593,7 +593,7 @@ AVERAGE
 httpd
 </property>
 <property type="string" id="regex" mode="w" >
-^.*\/*httpd
+^[^ ]*httpd[^ /]*( |$)
 </property>
 <property type="boolean" id="ignoreParameters" mode="w" >
 True
