@@ -48,6 +48,9 @@ ${dev/manageIp}
 </property>
 <tomanycont id='datapoints'>
 <object id='totalAccesses' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property type="text" id="zendoc" mode="w" >
+The total number of accesses 
+</property>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
 DERIVE
 </property>
@@ -59,6 +62,9 @@ True
 </property>
 </object>
 <object id='totalKBytes' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property type="text" id="zendoc" mode="w" >
+The total number of bytes served
+</property>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
 DERIVE
 </property>
@@ -70,6 +76,9 @@ True
 </property>
 </object>
 <object id='bytesPerReq' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property type="text" id="zendoc" mode="w" >
+The average number of bytes per request
+</property>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
 GAUGE
 </property>
@@ -78,6 +87,9 @@ True
 </property>
 </object>
 <object id='cpuLoad' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property type="text" id="zendoc" mode="w" >
+The current percentage CPU used by each worker and in total by Apache
+</property>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
 GAUGE
 </property>
@@ -86,6 +98,9 @@ True
 </property>
 </object>
 <object id='slotDNSLookup' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property type="text" id="zendoc" mode="w" >
+The number of DNSLookup's the server is currently performing
+</property>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
 GAUGE
 </property>
@@ -94,6 +109,9 @@ True
 </property>
 </object>
 <object id='slotKeepAlive' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property type="text" id="zendoc" mode="w" >
+The number of KeepAlive connections being maintained by the server
+</property>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
 GAUGE
 </property>
@@ -102,6 +120,9 @@ True
 </property>
 </object>
 <object id='slotLogging' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property type="text" id="zendoc" mode="w" >
+The number of  connections being logged by the server
+</property>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
 GAUGE
 </property>
@@ -110,6 +131,9 @@ True
 </property>
 </object>
 <object id='slotOpen' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property type="text" id="zendoc" mode="w" >
+The number of free connections on the server
+</property>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
 GAUGE
 </property>
@@ -118,6 +142,9 @@ True
 </property>
 </object>
 <object id='slotReadingRequest' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property type="text" id="zendoc" mode="w" >
+The number of  requests being read by the server
+</property>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
 GAUGE
 </property>
@@ -126,6 +153,9 @@ True
 </property>
 </object>
 <object id='slotSendingReply' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property type="text" id="zendoc" mode="w" >
+The number of requests to which the server is currently responding 
+</property>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
 GAUGE
 </property>
@@ -134,6 +164,9 @@ True
 </property>
 </object>
 <object id='slotWaiting' module='Products.ZenModel.RRDDataPoint' class='RRDDataPoint'>
+<property type="text" id="zendoc" mode="w" >
+The amount of idle connections the server is maintaining.
+</property>
 <property select_variable="rrdtypes" type="selection" id="rrdtype" mode="w" >
 GAUGE
 </property>
@@ -146,6 +179,9 @@ True
 </tomanycont>
 <tomanycont id='thresholds'>
 <object id='CPU over 90 percent' module='Products.ZenModel.MinMaxThreshold' class='MinMaxThreshold'>
+<property type="text" id="zendoc" mode="w" >
+Alert if CPU is over 90 percent
+</property>
 <property type="lines" id="dsnames" mode="w" >
 ['apache_cpuLoad']
 </property>
