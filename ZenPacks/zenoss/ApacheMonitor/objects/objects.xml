@@ -631,9 +631,6 @@ httpd
 <property type="string" id="regex" mode="w" >
 ^[^ ]*httpd[^ /]*( |$)
 </property>
-<property type="boolean" id="ignoreParameters" mode="w" >
-True
-</property>
 <property type="text" id="description" mode="w" >
 Apache httpd web server process
 </property>
