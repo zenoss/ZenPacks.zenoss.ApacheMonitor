@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE reference
+  PUBLIC "urn:pubid:zenoss.com:doctypes:dita:dtd:reference" "reference.dtd">
+<reference id="d10e414"><title>Verifying Your Apache Configuration</title><refbody><section><p>Once Apache has been configured, you should verify that it is
+      working correctly. To verify your Apache server, point your Web browser
+      to your Apache server at the appropriately modified URL:</p><p><codeph outputclass="code">http://</codeph><varname outputclass="replaceable">your-apache-server</varname><codeph outputclass="code">/server-status?auto</codeph></p><p>This is an example of what you might see:</p><codeblock outputclass="screen">Total Accesses: 1
+Total kBytes: 2
+Uptime: 43
+ReqPerSec: .0232558
+BytesPerSec: 47.6279
+BytesPerReq: 2048
+BusyWorkers: 1
+IdleWorkers: 5
+Scoreboard: _W____................................
+</codeblock><p>If there is a configuration issue, you should see an error message
+      telling you that the page is forbidden.</p><note>
+        <p>Your <ph conkeyref="names/platform"/> server or servers must be able to connect
+        to your Apache server by using HTTP to receive information. This means
+        that the <ph conkeyref="names/platform"/> server must be permitted not only by the
+        Apache configuration settings, but also by any firewalls or proxies
+        between the <ph conkeyref="names/platform"/> server and the Apache server, including any
+        firewall on the Apache server. If there are any proxies, they must be
+        configured to allow the <ph conkeyref="names/platform"/> HTTP traffic through. Consult your network
+        administrator and security officer to verify the firewall
+        configuration and your site's policies.</p>
+
+        <p>Further note that the name or IP address that your server has
+        behind a firewall may be different than the IP address (some form of
+        Network Address Translation (NAT)) or name resolution (the way that
+        the external server resolves names may be through an Internet-visible
+        DNS system rather than an intranet-only DNS system).</p>
+      </note></section></refbody></reference>

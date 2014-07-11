@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE reference PUBLIC "urn:pubid:zenoss.com:doctypes:dita:dtd:reference" "reference.dtd">
+<reference id="referenceid">
+  <title>(ApacheMonitor) Apache HTTP Server</title>
+  <shortdesc>The <zenpack>ZenPacks.zenoss.ApacheMonitor</zenpack> ZenPack monitors Apache HTTP Server by collecting metrics 
+    through the <codeph>mod_status</codeph> module.</shortdesc>
+  <refbody>
+    <section>
+      <p>The following metrics are collected and graphed for Apache HTTP Server.</p><ul>
+            <li>
+              <p>Requests per Second</p>
+            </li>
+            
+            <li>
+              <p>Throughput (Bytes/sec and Bytes/request)</p>
+            </li>
+            
+            <li>
+              <p>CPU Utilization of the HTTP server and all worker processes or
+                threads</p>
+            </li>
+            
+            <li>
+              <p>Slot Usage (Open, Waiting, Reading Request, Sending Reply,
+                Keep-Alive DNS Lookup, and Logging)</p>
+            </li>
+          </ul>
+    </section>
+  </refbody>
+</reference>

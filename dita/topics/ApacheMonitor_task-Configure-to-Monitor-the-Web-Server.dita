@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE task
+  PUBLIC "urn:pubid:zenoss.com:doctypes:dita:dtd:task" "task.dtd">
+<task id="d10e458"><title>Configure <ph conkeyref="names/platform"/> to Monitor the Web Server</title><taskbody><context><p>Once the Apache server is configured to allow <ph conkeyref="names/platform"/> to access the extended status, you can add
+      Apache monitoring to the device within <ph conkeyref="names/platform"/> by binding the Apache template to the
+      device.</p></context><steps-informal><ol>
+        <li>
+          <p>Select Infrastructure from the navigation bar.</p>
+        </li>
+
+        <li>
+          <p>Click the device name in the device list.</p>
+
+          <p>The device overview page appears.</p>
+        </li>
+
+        <li>
+          <p>In the left panel, expand Monitoring Templates, and then
+          select Device.</p>
+        </li>
+
+        <li>
+          <p>Select Bind Templates from the Action menu.</p>
+
+          <p>The Bind Templates dialog appears.</p>
+        </li>
+
+        <li>
+          <p>Add the Apache template to the list of templates, and then
+          click <b>Save</b>.</p>
+
+          <p>The Apache template is added. The system can now begin
+          collecting the Apache server metrics from this device.</p>
+        </li>
+      </ol></steps-informal></taskbody></task>

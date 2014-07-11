@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE map
+  PUBLIC "urn:pubid:zenoss.com:doctypes:dita:dtd:map" "map.dtd">
+<map>
+   <title>ApacheMonitor</title>
+   <topicref href="topics/ApacheMonitor.dita">
+      <topicref href="topics/ApacheMonitor_ref-Prerequisites.dita"/>
+      <topicref href="topics/ApacheMonitor_task-Display-the-Status-Page-in-Apache-Version-1.3-or-Higher.dita"/>
+      <topicref href="topics/ApacheMonitor_task-Display-the-Status-Page-in-Apache-Version-2.x.dita"/>
+      <topicref href="topics/ApacheMonitor_ref-Verifying-Your-Apache-Configuration.dita"/>
+      <topicref href="topics/ApacheMonitor_task-Configure-to-Monitor-the-Web-Server.dita"/>
+      <topicref href="topics/ApacheMonitor_ref-Daemons.dita"/>
+   </topicref>
+</map>

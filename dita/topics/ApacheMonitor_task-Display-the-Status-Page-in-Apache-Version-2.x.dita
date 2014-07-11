@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE task
+  PUBLIC "urn:pubid:zenoss.com:doctypes:dita:dtd:task" "task.dtd">
+<task id="d10e264"><title>Display the Status Page in Apache Version 2.x</title><taskbody><steps-informal><ol>
+        <li>
+          <p>On the Apache server, find the <filepath>httpd.conf</filepath>
+          file. This is usually <filepath>/etc/apache2/apache2.conf</filepath>
+          or <filepath>/etc/apache2/conf/httpd.conf</filepath>; however, other
+          locations are possible depending on your operating system and
+          setup.</p>
+
+          <p>If you are unsure about where your configuration file is
+          located, use your system;s search facilities to locate this file.
+          Under Windows, use the <uicontrol outputclass="guilabel">Search</uicontrol> button of the
+          Windows Explorer tool. Under Unix, try the following command:</p>
+
+          <codeblock outputclass="screen">find / -name httpd.conf </codeblock>
+        </li>
+
+        <li>
+          <p>Verify that the <codeph outputclass="code">mod_status</codeph> module is
+          loaded.</p>
+
+          <codeblock outputclass="screen"> apache% apachec2ctl -M 2&lt;&amp;1 | grep status
+status_module (shared)
+</codeblock>
+
+          <p>The previous output indicates that the module is loaded and no
+          further configuration is necessary. If there is no output, then copy
+          the <filepath>mods-available/status.load</filepath> to the <filepath>mods-enabled</filepath> directory, and then
+          run:</p>
+
+          <codeblock outputclass="screen"> apache% /etc/init.d/apache2 force-reload </codeblock>
+        </li>
+
+        <li>
+          <p>Turn the ExtendedStatus option on in the <filepath>httpd.conf
+          file</filepath>. This option is typically commented out. You can
+          enable it by uncommenting it or ensuring that it is defined.</p>
+
+          <p><codeblock outputclass="programlisting">#ExtendedStatus on</codeblock>becomes:</p>
+
+          <p><codeblock outputclass="programlisting">ExtendedStatus on</codeblock></p>
+        </li>
+
+        <li>
+          <p>Enable the <filepath>/server-status</filepath> location in the
+          <filepath>httpd.conf</filepath> file. This is another option that
+          typically already exists but is commented out.</p>
+
+          <codeblock outputclass="screen">#&lt;Location /server-status&gt;
+#    SetHandler server-status
+#    Order deny,allow
+#    Deny from all
+#    Allow from .example.com
+#&lt;/Location&gt;</codeblock>
+
+          <p>becomes:</p>
+
+          <codeblock outputclass="screen">&lt;Location /server-status&gt;
+SetHandler server-status
+Order deny,allow
+Deny from all
+Allow from <varname outputclass="replaceable">zenoss.example.com</varname>
+&lt;/Location&gt;</codeblock>
+
+          <note>
+            <p>Your <ph conkeyref="names/platform"/> server or servers must be able to
+            connect to your Apache server so you must ensure that it is either
+            listed here or is a part of the network specified in this chunk of
+            configuration.</p>
+
+            <p>To specify multiple servers, separate the entries with
+            spaces. If you would like to specify an IP address range rather
+            than a destination, be sure to add a network mask to the end of
+            the IP address range. The following example allows a server called
+            <keyword outputclass="constant">externalzenoss.example.com</keyword> as well as all
+            servers that start with '192.168.10' in their addresses:</p>
+
+            <p><codeblock outputclass="programlisting">&lt;Location /server-status&gt;SetHandler server-status
+Order deny,allowDeny from all
+Allow from <varname outputclass="replaceable">externalzenoss.example.com</varname> 192.168.10.0/24
+&lt;/Location&gt;
+</codeblock></p>
+          </note>
+        </li>
+
+        <li>
+          <p>Save the <filepath>httpd.conf</filepath> file with these
+          changes and verify that the configuration file is correct. This can
+          be accomplished with following command.</p>
+
+          <p><codeblock outputclass="programlisting">apache2ctl -t</codeblock></p>
+
+          <p>Correct any issues before restarting Apache.</p>
+        </li>
+
+        <li>
+          <p>Restart the webserver (<codeph outputclass="code">httpd</codeph>). This can be
+          accomplished with following command.</p>
+
+          <p><codeblock outputclass="programlisting">apache2ctl restart</codeblock></p>
+        </li>
+      </ol></steps-informal></taskbody></task>
